@@ -1,27 +1,28 @@
-import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
 import Sidebar from '../components/layout/Sidebar';
-import Footer from '../components/layout/Footer';
 import BottomNav from '../components/layout/BottomNav';
 
 const MainLayout = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50">
-      <Navbar onMenuClick={() => setSidebarOpen(true)} />
+    <div className="min-h-screen bg-[#f8fafc] flex">
+      {/* Sidebar - visible on md+ */}
+      <Sidebar />
 
-      <div className="flex flex-1 relative">
-        <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <div className="flex-1 md:ml-64 flex flex-col min-h-screen min-w-0">
+        {/* Top Navbar */}
+        <Navbar />
 
-        <main className="flex-1 overflow-y-auto pb-20 lg:pb-0">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        {/* Main Content */}
+        <main className="flex-1">
+          <div className="max-w-[1600px] mx-auto px-4 sm:px-8 py-8 pb-24 md:pb-8">
             <Outlet />
           </div>
-          <Footer />
         </main>
-        
+      </div>
+
+      {/* Mobile Bottom Nav */}
+      <div className="md:hidden">
         <BottomNav />
       </div>
     </div>
