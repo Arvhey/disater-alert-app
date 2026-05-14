@@ -40,9 +40,8 @@ const AuthLayout = () => {
         setShowInstall(false);
       }
       setDeferredPrompt(null);
-    } else {
       // Fallback instruction for browsers where prompt isn't natively triggerable
-      alert("To install the app, tap your browser's menu (⋮ or Share) and select 'Add to Home Screen'.");
+      alert("To install the app on your device, tap your browser's menu (⋮ or Share) and select 'Install App'.");
     }
   };
 
@@ -57,7 +56,7 @@ const AuthLayout = () => {
             </div>
             <div>
               <p className="text-sm font-bold leading-tight">Install Polomolok App</p>
-              <p className="text-[10px] text-slate-300 font-medium">Add to your home screen for quick access</p>
+              <p className="text-[10px] text-slate-300 font-medium">Get the official mobile app for real-time alerts</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
