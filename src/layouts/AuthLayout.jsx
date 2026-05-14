@@ -32,15 +32,21 @@ const AuthLayout = () => {
   }, []);
 
   const handleInstallClick = async () => {
-    if (deferredPrompt) {
-      // Show the native install prompt
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      if (outcome === 'accepted') {
-        setShowInstall(false);
+    try {
+      if (deferredPrompt) {
+        // Show the native install prompt
+        await deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          setShowInstall(false);
+        }
+        setDeferredPrompt(null);
+      } else {
+        // Fallback instruction for browsers where prompt isn't natively triggerable
+        alert("To install the app on your device, tap your browser's menu (⋮ or Share) and select 'Install App'.");
       }
-      setDeferredPrompt(null);
-      // Fallback instruction for browsers where prompt isn't natively triggerable
+    } catch (error) {
+      console.error("PWA prompt failed", error);
       alert("To install the app on your device, tap your browser's menu (⋮ or Share) and select 'Install App'.");
     }
   };
@@ -49,7 +55,7 @@ const AuthLayout = () => {
     <div className="min-h-screen bg-slate-50 relative flex flex-col">
       {/* PWA Install Banner - Only visible on mobile */}
       {showInstall && (
-        <div className="md:hidden bg-[#0f172a] text-white px-4 py-3 flex items-center justify-between shadow-md z-50">
+        <div className="md:hidden relative z-50 bg-[#0f172a] text-white px-4 py-3 flex items-center justify-between shadow-md">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 bg-[#0284c7] rounded-lg flex items-center justify-center">
               <Download className="w-4 h-4 text-white" />
