@@ -14,7 +14,21 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <AppRoutes />
-        <ToastContainer position="top-right" autoClose={3000} />
+        <ToastContainer 
+          position="top-center"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          toastClassName={() => 
+            "relative flex p-3 min-h-12 rounded-2xl justify-between overflow-hidden cursor-pointer bg-white shadow-xl shadow-slate-200 border border-slate-100 mb-4 mx-4 sm:mx-0"
+          }
+        />
       </AuthProvider>
     </BrowserRouter>
   );
