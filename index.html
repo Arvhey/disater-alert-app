@@ -25,7 +25,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
-  <body class="bg-gray-50 text-gray-900 font-sans antialiased app-loading">
+<body class="bg-gray-50 text-gray-900 font-sans antialiased app-loading">
 
   <!-- PWA Splash Screen -->
   <div id="splash-screen" style="
@@ -40,6 +40,14 @@
       gap: 28px;
       transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     ">
+    <!-- App Icon (Hidden on Mobile) -->
+    <img src="/vite.svg" alt="Logo" class="splash-icon" style="
+        width: 100px;
+        height: 100px;
+        border-radius: 24px;
+        box-shadow: 0 8px 32px rgba(2, 132, 199, 0.4);
+      " />
+
     <!-- App Name -->
     <div style="text-align: center;">
       <p style="
@@ -101,19 +109,24 @@
 
   <style>
     @keyframes spin-cw {
-      to { transform: rotate(360deg); }
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     @keyframes spin-ccw {
-      to { transform: rotate(-360deg); }
+      to {
+        transform: rotate(-360deg);
+      }
     }
 
     @keyframes app-entry {
-      from { 
+      from {
         opacity: 0;
         transform: translateY(20px);
       }
-      to { 
+
+      to {
         opacity: 1;
         transform: translateY(0);
       }
@@ -132,9 +145,16 @@
       pointer-events: none;
     }
 
+    .splash-icon {
+      display: none;
+    }
+
     @media (min-width: 768px) {
       .splash-exit {
         transform: scale(1.1);
+      }
+      .splash-icon {
+        display: block;
       }
     }
   </style>
@@ -156,7 +176,7 @@
         splash.classList.add('splash-exit');
         document.body.classList.remove('app-loading');
         document.body.classList.add('app-ready');
-        
+
         setTimeout(() => splash.remove(), 800);
       }, remaining);
     }
