@@ -18,14 +18,12 @@ const Sidebar = () => {
   return (
     <aside className="w-64 bg-white border-r border-slate-100 min-h-screen fixed left-0 top-0 z-50 hidden md:flex flex-col">
       {/* Logo */}
-      <div className="h-20 flex items-center px-6 border-b border-transparent">
+      <div className="h-20 flex items-center px-6 border-b border-slate-100">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-[#0284c7] rounded-2xl flex items-center justify-center flex-shrink-0 shadow-md shadow-sky-200">
-            <Bell className="h-5 w-5 text-white" fill="currentColor" />
-          </div>
-          <div>
-            <h1 className="font-bold text-slate-800 text-[15px] leading-tight">Polomolok</h1>
-            <p className="text-[9px] font-bold text-[#0284c7] tracking-widest uppercase">Disaster System</p>
+          <img src="/vite.svg" alt="Logo" className="w-10 h-10 rounded-lg shadow-sm flex-shrink-0" />
+          <div className="flex flex-col">
+            <h1 className="font-black text-slate-800 text-sm leading-tight tracking-tight uppercase">Polomolok</h1>
+            <p className="text-[9px] font-black text-[#0284c7] tracking-widest uppercase mt-0.5 whitespace-nowrap">MDRRMO System</p>
           </div>
         </div>
       </div>
