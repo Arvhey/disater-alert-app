@@ -13,17 +13,17 @@ const statusConfig = {
   pending: {
     label: 'Pending',
     icon: Clock3,
-    class: 'bg-amber-100 text-amber-700 border-amber-200',
+    class: 'bg-amber-500/20 text-amber-300 border-amber-500/30',
   },
   verified: {
     label: 'Verified',
     icon: CheckCircle2,
-    class: 'bg-green-100 text-green-700 border-green-200',
+    class: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
   },
   rejected: {
     label: 'Rejected',
     icon: XCircle,
-    class: 'bg-red-100 text-red-700 border-red-200',
+    class: 'bg-red-500/20 text-red-300 border-red-500/30',
   },
 };
 
@@ -34,65 +34,69 @@ const ReportCard = ({ report, isAdmin, onStatusChange, onDelete }) => {
   const reporterName = report.users?.full_name || 'Anonymous';
 
   return (
-    <div className="card group hover:shadow-md transition-shadow duration-200">
+    <div className="bg-white/5 backdrop-blur-xl rounded-[1.5rem] sm:rounded-[2.5rem] border border-white/10 shadow-2xl overflow-hidden flex flex-col group hover:bg-white/10 transition-all duration-500">
       {/* Image */}
       {report.image_url ? (
-        <div className="h-40 overflow-hidden">
+        <div className="h-40 sm:h-52 overflow-hidden relative">
           <img
             src={report.image_url}
             alt={`${report.type} report`}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-transparent to-transparent opacity-60" />
         </div>
       ) : (
-        <div className="h-32 flex items-center justify-center bg-slate-50 border-b border-slate-100">
-          <ImageIcon className="h-8 w-8 text-slate-300" />
+        <div className="h-28 sm:h-36 flex items-center justify-center bg-white/5 border-b border-white/5">
+          <ImageIcon className="h-8 w-8 sm:h-12 sm:w-12 text-white/5" />
         </div>
       )}
 
-      <div className="p-4">
+      <div className="p-5 sm:p-7">
         {/* Type + status */}
-        <div className="flex items-center justify-between gap-2 mb-3">
-          <div className="flex items-center gap-2">
-            <span className="text-xl">{typeEmoji[typeKey] || '⚠️'}</span>
-            <span className="text-sm font-semibold text-slate-900">{report.type || report.title}</span>
+        <div className="flex items-center justify-between gap-3 mb-4 sm:mb-6">
+          <div className="flex items-center gap-3">
+            <span className="text-xl sm:text-3xl drop-shadow-lg">{typeEmoji[typeKey] || '⚠️'}</span>
+            <span className="text-base sm:text-xl font-black text-white uppercase tracking-tight leading-tight">{report.type || report.title}</span>
           </div>
-          <span className={`inline-flex items-center gap-1 text-[10px] font-bold uppercase px-2 py-0.5 rounded-full border ${status.class}`}>
-            <StatusIcon className="h-3 w-3" />
+          <span className={`inline-flex items-center gap-1.5 text-[8px] sm:text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border shadow-xl flex-shrink-0 ${status.class}`}>
+            <StatusIcon className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
             {status.label}
           </span>
         </div>
 
         {/* Description */}
-        <p className="text-sm text-slate-600 leading-relaxed line-clamp-2 mb-3">
-          {report.description}
-        </p>
+        <div className="bg-white/5 rounded-2xl p-4 sm:p-5 mb-5 border border-white/5 group-hover:bg-white/10 transition-colors">
+          <p className="text-xs sm:text-sm text-brand-50/70 leading-relaxed font-medium line-clamp-2 sm:line-clamp-3 italic">
+            "{report.description}"
+          </p>
+        </div>
 
         {/* Meta */}
-        <div className="space-y-1.5 text-xs text-slate-400">
-          <div className="flex items-center gap-1.5">
-            <MapPin className="h-3 w-3 flex-shrink-0" />
+        <div className="space-y-2 text-[9px] sm:text-[11px] font-black uppercase tracking-[0.2em] text-white/20">
+          <div className="flex items-center gap-2">
+            <MapPin className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-brand-400/50" />
             <span className="truncate">{report.barangay}</span>
           </div>
-          <div className="flex items-center gap-1.5">
-            <Clock className="h-3 w-3 flex-shrink-0" />
+          <div className="flex items-center gap-2">
+            <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-white/10" />
             <span>{formatDate(report.created_at)}</span>
           </div>
           {isAdmin && (
-            <div className="flex items-center gap-1.5 text-slate-500 font-medium">
-              <span>By: {reporterName}</span>
+            <div className="flex items-center gap-2 text-brand-400 mt-2 pt-2 border-t border-white/5">
+              <div className="w-1.5 h-1.5 rounded-full bg-brand-500 shadow-[0_0_8px_rgba(14,165,233,0.5)]" />
+              <span className="truncate">{reporterName}</span>
             </div>
           )}
         </div>
 
         {/* Controls */}
         {(isAdmin || onDelete) && (
-          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+          <div className="mt-6 pt-5 border-t border-white/5 flex items-center justify-between gap-3">
             {isAdmin && (
               <select
                 value={report.status}
                 onChange={(e) => onStatusChange(report.id, e.target.value)}
-                className="flex-1 text-xs border border-slate-200 rounded-lg px-2 py-1.5 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-400"
+                className="flex-1 h-10 sm:h-12 text-[10px] font-black uppercase tracking-widest border border-white/10 rounded-xl px-4 bg-[#1e293b] text-white outline-none focus:ring-2 focus:ring-brand-500/50 transition-all cursor-pointer hover:bg-[#2d3a4f]"
               >
                 <option value="pending">Pending</option>
                 <option value="verified">Verified</option>
@@ -102,10 +106,10 @@ const ReportCard = ({ report, isAdmin, onStatusChange, onDelete }) => {
             {onDelete && (
               <button
                 onClick={() => onDelete(report.id)}
-                className={`p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors ${!isAdmin ? 'ml-auto' : ''}`}
+                className={`p-3 rounded-xl text-white/20 hover:text-red-400 hover:bg-red-500/20 transition-all border border-transparent hover:border-red-500/50 ${!isAdmin ? 'ml-auto' : ''}`}
                 title="Delete report"
               >
-                <Trash2 className="h-3.5 w-3.5" />
+                <Trash2 className="h-5 w-5" />
               </button>
             )}
           </div>

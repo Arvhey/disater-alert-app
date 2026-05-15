@@ -13,15 +13,15 @@ const Modal = ({ isOpen, onClose, title, children, size = 'md', footer }) => {
   const sizes = { sm: 'max-w-sm', md: 'max-w-md', lg: 'max-w-lg', xl: 'max-w-xl' };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-slate-900/50" onClick={onClose} />
-      <div className={`relative bg-white rounded-xl shadow-xl w-full ${sizes[size]} flex flex-col max-h-[90vh]`}>
-        <div className="flex items-center justify-between px-6 py-4 border-b">
-          <h3 className="text-lg font-bold text-slate-900">{title}</h3>
-          <button onClick={onClose} className="p-1 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-slate-600"><X className="h-5 w-5" /></button>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4">
+      <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-sm" onClick={onClose} />
+      <div className={`relative bg-[#1e293b]/95 backdrop-blur-2xl border border-white/10 rounded-2xl sm:rounded-[2.5rem] shadow-2xl w-full ${sizes[size]} flex flex-col max-h-[95vh] overflow-hidden`}>
+        <div className="flex items-center justify-between px-6 sm:px-8 py-5 sm:py-7 border-b border-white/5 bg-white/5">
+          <h3 className="text-base sm:text-xl font-black text-white uppercase tracking-tight">{title}</h3>
+          <button onClick={onClose} className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center hover:bg-white/5 rounded-xl text-white/20 hover:text-white transition-all"><X className="h-5 w-5" /></button>
         </div>
-        <div className="px-6 py-5 overflow-y-auto flex-1">{children}</div>
-        {footer && <div className="px-6 py-4 border-t flex justify-end gap-3">{footer}</div>}
+        <div className="px-6 sm:px-8 py-6 sm:py-8 overflow-y-auto flex-1 custom-scrollbar">{children}</div>
+        {footer && <div className="px-6 sm:px-8 py-5 sm:py-6 border-t border-white/5 bg-white/5 flex justify-end gap-3">{footer}</div>}
       </div>
     </div>
   );

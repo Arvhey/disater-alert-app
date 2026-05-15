@@ -50,10 +50,10 @@ const Register = () => {
   return (
     <div className="min-h-screen flex w-full">
       {/* Left hero panel */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-brand-700 via-brand-600 to-brand-500 flex-col justify-between p-16 relative overflow-hidden">
+      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] flex-col justify-between p-16 relative overflow-hidden border-r border-white/5">
         <div className="absolute inset-0">
-          <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-white/10 blur-[100px]" />
-          <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-white/10 blur-[100px]" />
+          <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] rounded-full bg-brand-500/5 blur-[120px]" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] rounded-full bg-brand-400/5 blur-[120px]" />
         </div>
         
         <div className="relative z-10">
@@ -86,107 +86,120 @@ const Register = () => {
       </div>
 
       {/* Right form panel */}
-      <div className="flex-1 flex items-center justify-center p-4 sm:p-8 bg-white lg:bg-slate-50 overflow-y-auto">
-        <div className="w-full max-w-md bg-white p-6 sm:p-8 lg:p-10 lg:rounded-3xl lg:shadow-2xl lg:border lg:border-slate-100 my-8">
+      <div className="flex-1 flex items-center justify-center p-4 sm:p-8 bg-transparent overflow-y-auto">
+        <div className="w-full max-w-md bg-white/10 backdrop-blur-xl p-6 sm:p-8 lg:p-10 rounded-3xl border border-white/20 shadow-2xl my-8">
           {/* Mobile logo */}
           <div className="flex lg:hidden items-center gap-3 mb-10">
-            <div className="w-12 h-12 rounded-2xl bg-brand-600 flex items-center justify-center shadow-lg shadow-brand-200">
+            <div className="w-12 h-12 rounded-2xl bg-brand-600 flex items-center justify-center shadow-lg shadow-brand-500/20">
               <Bell className="h-6 w-6 text-white" />
             </div>
             <div>
-              <p className="font-bold text-slate-900 text-lg">Polomolok DACS</p>
-              <p className="text-xs text-slate-500 font-medium">Disaster Alert System</p>
+              <p className="font-bold text-white text-lg">Polomolok DACS</p>
+              <p className="text-xs text-brand-200 font-medium opacity-80">Disaster Alert System</p>
             </div>
           </div>
 
-          <div className="mb-10">
-            <h2 className="text-3xl font-black text-slate-900 mb-2 tracking-tight">Create an account</h2>
-            <p className="text-slate-500 font-medium">Join the safety network today</p>
+          <div className="mb-10 text-center lg:text-left">
+            <h2 className="text-3xl font-black text-white mb-2 tracking-tight">Create an account</h2>
+            <p className="text-brand-100 font-medium opacity-80">Join the safety network today</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            <Input
-              label="Full Name"
-              name="fullName"
-              type="text"
-              placeholder="Juan dela Cruz"
-              value={form.fullName}
-              onChange={handleChange}
-              icon={User}
-              error={errors.fullName}
-              className="h-11 text-sm"
-            />
-            <Input
-              label="Email address"
-              name="email"
-              type="email"
-              placeholder="you@example.com"
-              value={form.email}
-              onChange={handleChange}
-              icon={Mail}
-              error={errors.email}
-              className="h-11 text-sm"
-            />
+            <div className="space-y-1">
+              <label className="block text-sm font-semibold text-brand-50 ml-1">Full Name</label>
+              <div className="relative">
+                <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-brand-200/60 pointer-events-none" />
+                <input
+                  name="fullName"
+                  type="text"
+                  placeholder="Juan dela Cruz"
+                  value={form.fullName}
+                  onChange={handleChange}
+                  className={`flex h-11 w-full rounded-xl border bg-white/5 pl-12 pr-4 py-2 text-sm text-white placeholder:text-white/30 transition-all focus:outline-none focus:ring-4 focus:ring-brand-500/20 focus:border-brand-400 ${errors.fullName ? 'border-red-400' : 'border-white/10'}`}
+                />
+              </div>
+              {errors.fullName && <p className="text-xs text-red-400 font-medium mt-1 ml-1">{errors.fullName}</p>}
+            </div>
+
+            <div className="space-y-1">
+              <label className="block text-sm font-semibold text-brand-50 ml-1">Email address</label>
+              <div className="relative">
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-brand-200/60 pointer-events-none" />
+                <input
+                  name="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  value={form.email}
+                  onChange={handleChange}
+                  className={`flex h-11 w-full rounded-xl border bg-white/5 pl-12 pr-4 py-2 text-sm text-white placeholder:text-white/30 transition-all focus:outline-none focus:ring-4 focus:ring-brand-500/20 focus:border-brand-400 ${errors.email ? 'border-red-400' : 'border-white/10'}`}
+                />
+              </div>
+              {errors.email && <p className="text-xs text-red-400 font-medium mt-1 ml-1">{errors.email}</p>}
+            </div>
 
             {/* Barangay */}
             <div className="space-y-1">
-              <label className="block text-sm font-semibold text-slate-700 ml-1">Barangay</label>
+              <label className="block text-sm font-semibold text-brand-50 ml-1">Barangay</label>
               <div className="relative">
-                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 pointer-events-none" />
+                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-brand-200/60 pointer-events-none" />
                 <select
                   name="barangay"
                   value={form.barangay}
                   onChange={handleChange}
-                  className={`flex h-11 w-full rounded-xl border bg-white pl-12 pr-3 py-2 text-sm transition-all focus:outline-none focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 ${errors.barangay ? 'border-red-400' : 'border-slate-200'}`}
+                  className={`flex h-11 w-full rounded-xl border bg-white/5 pl-12 pr-3 py-2 text-sm text-white transition-all focus:outline-none focus:ring-4 focus:ring-brand-500/20 focus:border-brand-400 ${errors.barangay ? 'border-red-400' : 'border-white/10'}`}
                 >
-                  <option value="">Select your barangay</option>
-                  {BARANGAYS.map(b => <option key={b} value={b}>{b}</option>)}
+                  <option value="" className="text-slate-900">Select your barangay</option>
+                  {BARANGAYS.map(b => <option key={b} value={b} className="text-slate-900">{b}</option>)}
                 </select>
               </div>
-              {errors.barangay && <p className="text-xs text-red-600 font-medium mt-1 ml-1">{errors.barangay}</p>}
+              {errors.barangay && <p className="text-xs text-red-400 font-medium mt-1 ml-1">{errors.barangay}</p>}
             </div>
 
             {/* Password */}
             <div className="space-y-1">
-              <label className="block text-sm font-semibold text-slate-700 ml-1">Password</label>
+              <label className="block text-sm font-semibold text-brand-50 ml-1">Password</label>
               <div className="relative">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 pointer-events-none" />
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-brand-200/60 pointer-events-none" />
                 <input
                   name="password"
                   type={showPass ? 'text' : 'password'}
                   placeholder="Min. 6 characters"
                   value={form.password}
                   onChange={handleChange}
-                  className={`flex h-11 w-full rounded-xl border bg-white pl-12 pr-12 py-2 text-sm transition-all focus:outline-none focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 ${errors.password ? 'border-red-400' : 'border-slate-200'}`}
+                  className={`flex h-11 w-full rounded-xl border bg-white/5 pl-12 pr-12 py-2 text-sm text-white placeholder:text-white/30 transition-all focus:outline-none focus:ring-4 focus:ring-brand-500/20 focus:border-brand-400 ${errors.password ? 'border-red-400' : 'border-white/10'}`}
                 />
-                <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors">
+                <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/60 transition-colors">
                   {showPass ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </button>
               </div>
-              {errors.password && <p className="text-xs text-red-600 font-medium mt-1 ml-1">{errors.password}</p>}
+              {errors.password && <p className="text-xs text-red-400 font-medium mt-1 ml-1">{errors.password}</p>}
             </div>
 
-            <Input
-              label="Confirm Password"
-              name="confirmPassword"
-              type="password"
-              placeholder="Repeat password"
-              value={form.confirmPassword}
-              onChange={handleChange}
-              icon={Lock}
-              error={errors.confirmPassword}
-              className="h-11 text-sm"
-            />
+            <div className="space-y-1">
+              <label className="block text-sm font-semibold text-brand-50 ml-1">Confirm Password</label>
+              <div className="relative">
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-brand-200/60 pointer-events-none" />
+                <input
+                  name="confirmPassword"
+                  type="password"
+                  placeholder="Repeat password"
+                  value={form.confirmPassword}
+                  onChange={handleChange}
+                  className={`flex h-11 w-full rounded-xl border bg-white/5 pl-12 pr-4 py-2 text-sm text-white placeholder:text-white/30 transition-all focus:outline-none focus:ring-4 focus:ring-brand-500/20 focus:border-brand-400 ${errors.confirmPassword ? 'border-red-400' : 'border-white/10'}`}
+                />
+              </div>
+              {errors.confirmPassword && <p className="text-xs text-red-400 font-medium mt-1 ml-1">{errors.confirmPassword}</p>}
+            </div>
 
-            <Button type="submit" fullWidth loading={loading} size="lg" className="h-12 text-base font-bold shadow-lg shadow-brand-100 mt-4">
+            <Button type="submit" fullWidth loading={loading} size="lg" className="h-12 text-base font-bold bg-brand-600 hover:bg-brand-500 border-none shadow-lg shadow-brand-600/20 mt-4">
               Create Account
             </Button>
           </form>
 
-          <div className="mt-10 pt-8 border-t border-slate-100 text-center">
-            <p className="text-slate-500 font-medium">
+          <div className="mt-10 pt-8 border-t border-white/10 text-center">
+            <p className="text-brand-100 font-medium opacity-80">
               Already have an account?{' '}
-              <Link to="/login" className="text-brand-600 hover:text-brand-700 font-bold transition-colors">
+              <Link to="/login" className="text-brand-400 hover:text-brand-300 font-bold transition-colors">
                 Sign in
               </Link>
             </p>

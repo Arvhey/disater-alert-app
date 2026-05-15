@@ -12,14 +12,15 @@ function App() {
         <ToastContainer 
           position="top-right"
           autoClose={3000}
-          hideProgressBar={true}
-          newestOnTop={false}
+          hideProgressBar={false}
+          newestOnTop
           closeOnClick
           rtl={false}
           pauseOnFocusLoss
-          draggable={false}
+          draggable
           pauseOnHover
-          theme="light"
+          theme="dark"
+          toastClassName="glass shadow-2xl"
         />
       </AuthProvider>
     </BrowserRouter>

@@ -3,55 +3,78 @@
 @tailwind utilities;
 
 @layer base {
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100% !important;
+    height: 100vh !important;
+    overflow: hidden !important;
+    -webkit-text-size-adjust: 100%;
+    background-color: #0f172a;
+  }
+
   body {
-    @apply bg-slate-50 text-slate-900;
-    font-family: Inter, system-ui, -apple-system, sans-serif;
+    @apply text-white;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  * {
+    box-sizing: border-box;
   }
 
   img, svg, video, canvas, audio, iframe, embed, object {
     display: block;
+    max-width: 100%;
   }
 }
 
 @layer components {
   .card {
-    background-color: #fff;
-    border-radius: 1rem;
-    border-width: 1px;
-    border-color: #e2e8f0;
-    box-shadow: 0 1px 2px #0000000d;
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl;
   }
 
   .btn {
-    @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200;
+    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-black uppercase tracking-widest rounded-2xl transition-all duration-300 active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
   }
 
-  /* Toast overrides */
+  /* Toast overrides for Dark Glass theme */
   .Toastify__toast {
-    padding: 0 !important;
-    margin-bottom: 12px !important;
-    border-radius: 1rem !important;
+    background: rgba(30, 41, 59, 0.8) !important;
+    backdrop-filter: blur(16px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 24px !important;
+    padding: 12px !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
   }
 
   .Toastify__toast-body {
-    padding: 0 12px !important;
-    margin: 0 !important;
-    font-family: Inter, sans-serif !important;
-    font-size: 13px !important;
-    font-weight: 600 !important;
-    color: #1e293b !important;
-  }
-
-  .Toastify__toast-icon {
-    width: 22px !important;
-    margin-inline-end: 8px !important;
+    padding: 0 8px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    color: #fff !important;
   }
 
   .Toastify__close-button {
-    color: #94a3b8 !important;
+    color: rgba(255, 255, 255, 0.3) !important;
     opacity: 1 !important;
-    padding-right: 8px !important;
   }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 100px;
 }
 
 /* Hide scrollbar utility */
@@ -63,45 +86,21 @@
   scrollbar-width: none;
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
-}
-
-@keyframes dash {
-  to {
-    stroke-dashoffset: -100;
-  }
-}
-
-@keyframes wave {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(20deg); }
-  75% { transform: rotate(-15deg); }
-}
-
-.animate-wave {
-  animation: wave 1.5s ease-in-out infinite;
-}
-
 /* Glassmorphism utility */
 .glass {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  @apply bg-white/5 backdrop-blur-2xl border border-white/10 shadow-2xl;
 }
 
+.glass-brand {
+  @apply bg-brand-500/10 backdrop-blur-2xl border border-brand-500/20 shadow-2xl;
+}
+
+/* Animations */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}

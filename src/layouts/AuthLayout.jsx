@@ -52,7 +52,7 @@ const AuthLayout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 relative flex flex-col">
+    <div className="min-h-screen bg-[#0f172a] relative flex flex-col">
       {/* PWA Install Banner - Only visible on mobile */}
       {showInstall && (
         <div className="md:hidden relative z-50 bg-[#0f172a] text-white px-4 py-3 flex items-center justify-between shadow-md">

@@ -10,34 +10,34 @@ const Input = forwardRef(({
   ...props
 }, ref) => {
   return (
-    <div className={`space-y-1.5 ${containerClass}`}>
+    <div className={`space-y-2 ${containerClass}`}>
       {label && (
-        <label className="block text-sm font-semibold text-slate-700 ml-1">
+        <label className="block text-[10px] font-black text-white/40 uppercase tracking-[0.2em] ml-1">
           {label}
         </label>
       )}
       <div className="relative group">
         {Icon && (
           <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-            <Icon className="h-5 w-5 text-slate-400 group-focus-within:text-brand-500 transition-colors" />
+            <Icon className="h-5 w-5 text-white/20 group-focus-within:text-brand-400 transition-colors" />
           </div>
         )}
         <input
           ref={ref}
           className={`
-            flex h-12 w-full rounded-xl border bg-white px-4 py-2 text-slate-900 text-base
-            placeholder:text-slate-400 transition-all duration-200
-            focus:outline-none focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500
-            disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-slate-50
-            ${Icon ? 'pl-11' : ''}
-            ${error ? 'border-red-400 focus:ring-red-400/10 focus:border-red-500' : 'border-slate-200'}
+            flex h-12 sm:h-14 w-full rounded-xl sm:rounded-2xl border bg-white/5 backdrop-blur-xl px-4 py-2 text-white text-sm sm:text-base
+            placeholder:text-white/10 transition-all duration-300
+            focus:outline-none focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500/50 focus:bg-white/10
+            disabled:cursor-not-allowed disabled:opacity-30
+            ${Icon ? 'pl-12' : ''}
+            ${error ? 'border-red-500/50 focus:ring-red-500/10 focus:border-red-500' : 'border-white/10'}
             ${className}
           `}
           {...props}
         />
       </div>
-      {error && <p className="text-xs text-red-600 font-medium mt-1 ml-1">{error}</p>}
-      {helperText && !error && <p className="text-xs text-slate-500 mt-1 ml-1">{helperText}</p>}
+      {error && <p className="text-[10px] text-red-400 font-black uppercase tracking-widest mt-1.5 ml-1">{error}</p>}
+      {helperText && !error && <p className="text-[10px] text-white/20 font-black uppercase tracking-widest mt-1.5 ml-1">{helperText}</p>}
     </div>
   );
 });

@@ -133,46 +133,47 @@ const EvacuationCenters = () => {
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 sm:space-y-10 relative z-10 max-w-7xl mx-auto px-1 sm:px-0">
       {/* Header */}
-      <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-emerald-600 to-emerald-800 p-8 text-white shadow-xl shadow-emerald-100">
-        <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl" />
+      <div className="relative overflow-hidden rounded-[1.5rem] sm:rounded-[2.5rem] bg-gradient-to-br from-emerald-600/20 to-emerald-900/40 p-6 sm:p-12 text-white border border-emerald-500/20 shadow-2xl backdrop-blur-md">
+        <div className="absolute -top-10 -right-10 w-64 h-64 bg-emerald-500/20 rounded-full blur-[100px]" />
+        <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-emerald-400/10 rounded-full blur-[80px]" />
         <div className="relative z-10">
-          <h1 className="text-3xl font-black tracking-tight leading-none">Evacuation Centers</h1>
-          <p className="text-emerald-100 text-xs mt-3 font-medium max-w-[200px] leading-relaxed">
-            Real-time availability and directions to safe zones across Polomolok.
+          <h1 className="text-3xl sm:text-5xl font-black tracking-tight leading-tight uppercase">Safe Sectors</h1>
+          <p className="text-emerald-100/60 text-xs sm:text-base mt-4 font-medium max-w-md leading-relaxed">
+            Real-time evacuation intel and logistics for the Municipality of Polomolok.
           </p>
         </div>
       </div>
 
       {/* Map Section */}
-      <div className="card overflow-hidden h-[300px] relative border-none shadow-xl shadow-slate-200/50 rounded-[2rem]">
+      <div className="bg-white/5 backdrop-blur-xl overflow-hidden h-[300px] sm:h-[500px] relative border border-white/10 shadow-2xl rounded-[1.5rem] sm:rounded-[3rem]">
         {loading && (
-          <div className="absolute inset-0 bg-white/50 backdrop-blur-sm z-10 flex items-center justify-center">
+          <div className="absolute inset-0 bg-[#0f172a]/40 backdrop-blur-sm z-10 flex items-center justify-center">
             <Loader />
           </div>
         )}
-        <div ref={mapRef} className="h-full w-full" id="map" />
+        <div ref={mapRef} className="h-full w-full grayscale-[0.2] contrast-[1.1] brightness-[0.9]" id="map" />
       </div>
 
       {/* Filters */}
-      <div className="space-y-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         <div className="relative group">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 pointer-events-none transition-colors group-focus-within:text-emerald-500" />
+          <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30 pointer-events-none transition-colors group-focus-within:text-emerald-400" />
           <input
             type="text"
-            placeholder="Search centers or details..."
+            placeholder="Search sectors..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full h-14 pl-12 pr-4 rounded-2xl border-none bg-white shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-medium"
+            className="w-full h-14 sm:h-16 pl-14 pr-6 rounded-2xl border border-white/10 bg-white/5 shadow-2xl text-sm sm:text-base font-bold text-white outline-none focus:bg-white/10 focus:border-emerald-500/50 transition-all placeholder:text-white/20"
           />
         </div>
         <select
           value={selectedBarangay}
           onChange={(e) => setSelectedBarangay(e.target.value)}
-          className="w-full h-12 px-4 rounded-2xl border-none bg-white shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 font-bold text-slate-700"
+          className="w-full h-14 sm:h-16 px-6 rounded-2xl border border-white/10 bg-[#1e293b] shadow-2xl text-sm sm:text-base font-black text-white outline-none focus:bg-white/10 focus:border-emerald-500/50 transition-all cursor-pointer uppercase tracking-widest"
         >
-          <option value="All">All Barangays</option>
+          <option value="All">Global Sectors</option>
           {BARANGAYS.map(b => (
             <option key={b} value={b}>{b}</option>
           ))}
@@ -184,62 +185,62 @@ const EvacuationCenters = () => {
           <Loader />
         </div>
       ) : filteredCenters.length === 0 ? (
-        <div className="card p-12 text-center">
-          <Home className="h-12 w-12 text-slate-300 mx-auto mb-4" />
-          <p className="text-slate-500 font-medium">No evacuation centers found.</p>
+        <div className="bg-white/5 backdrop-blur-xl p-16 sm:p-24 text-center rounded-[2rem] sm:rounded-[3rem] border border-white/10 shadow-2xl">
+          <Home className="h-12 w-12 sm:h-16 sm:w-16 text-white/5 mx-auto mb-6" />
+          <p className="text-white/30 font-black uppercase tracking-tight text-lg">No Sectors Found</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
           {filteredCenters.map((center) => (
-            <div key={center.id} className="card group hover:shadow-md transition-shadow duration-200">
-              <div className="p-5">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center">
-                    <Home className="h-5 w-5 text-emerald-600" />
+            <div key={center.id} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[1.5rem] sm:rounded-[2.5rem] shadow-2xl group hover:bg-white/10 transition-all duration-500">
+              <div className="p-6 sm:p-9">
+                <div className="flex items-start justify-between mb-6">
+                  <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 shadow-lg">
+                    <Home className="h-5 w-5 sm:h-7 sm:w-7 text-emerald-400" />
                   </div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-1 bg-slate-100 text-slate-600 rounded-full">
+                  <span className="text-[8px] sm:text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1 bg-white/5 text-white/40 rounded-full border border-white/10">
                     {center.barangay}
                   </span>
                 </div>
                 
-                <h3 className="text-lg font-bold text-slate-900 mb-2">{center.name}</h3>
+                <h3 className="text-lg sm:text-xl font-black text-white mb-4 uppercase tracking-tight leading-tight">{center.name}</h3>
                 
-                <div className="space-y-3 text-sm text-slate-600 mb-4">
-                  <div className="flex items-start gap-2">
-                    <MapPin className="h-4 w-4 text-slate-400 mt-0.5 flex-shrink-0" />
-                    <span>{center.address || 'No address provided.'}</span>
+                <div className="space-y-3 sm:space-y-4 text-xs sm:text-sm font-bold text-white/30 mb-8">
+                  <div className="flex items-start gap-3">
+                    <MapPin className="h-4 w-4 text-emerald-500/50 mt-0.5 flex-shrink-0" />
+                    <span className="leading-relaxed truncate sm:whitespace-normal">{center.address || 'No location data.'}</span>
                   </div>
                   {center.capacity && (
-                    <div className="flex items-center gap-2">
-                      <Users className="h-4 w-4 text-slate-400 flex-shrink-0" />
-                      <span>Capacity: {center.capacity} people</span>
+                    <div className="flex items-center gap-3">
+                      <Users className="h-4 w-4 text-white/10 flex-shrink-0" />
+                      <span>Capacity: <span className="text-white/60">{center.capacity} PAX</span></span>
                     </div>
                   )}
                   {center.contact_number && (
-                    <div className="flex items-center gap-2">
-                      <Phone className="h-4 w-4 text-slate-400 flex-shrink-0" />
-                      <span>{center.contact_number}</span>
+                    <div className="flex items-center gap-3">
+                      <Phone className="h-4 w-4 text-white/10 flex-shrink-0" />
+                      <span className="text-emerald-400/60 tracking-wider">{center.contact_number}</span>
                     </div>
                   )}
                 </div>
 
-                <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
-                  <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border ${
+                <div className="pt-6 border-t border-white/5 flex items-center justify-between">
+                  <span className={`text-[8px] sm:text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full border shadow-lg flex items-center gap-1.5 ${
                     center.status === 'Full' 
-                      ? 'bg-amber-50 text-amber-700 border-amber-200' 
+                      ? 'bg-amber-500/20 text-amber-300 border-amber-500/30' 
                       : center.status === 'Closed'
-                      ? 'bg-red-50 text-red-700 border-red-200'
-                      : 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                      ? 'bg-red-500/20 text-red-300 border-red-500/30'
+                      : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
                   }`}>
-                    {center.status === 'Full' ? '⚠️' : center.status === 'Closed' ? '❌' : '✅'}
-                    {center.status || 'Open'}
+                    <span className="w-1.5 h-1.5 rounded-full bg-current shadow-[0_0_8px_currentColor]" />
+                    {center.status || 'Active'}
                   </span>
                   {center.latitude && center.longitude && (
                     <button 
                       onClick={() => centerOnMap(center.latitude, center.longitude, center.id)}
-                      className="flex items-center gap-1 text-brand-600 text-xs font-bold hover:underline"
+                      className="flex items-center gap-2 text-brand-400 text-[10px] sm:text-xs font-black uppercase tracking-widest hover:text-brand-300 transition-colors"
                     >
-                      <MapIcon className="h-3 w-3" /> Pin on Map
+                      <MapIcon className="h-4 w-4" /> Locate
                     </button>
                   )}
                 </div>

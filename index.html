@@ -25,7 +25,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
-<body class="bg-gray-50 text-gray-900 font-sans antialiased app-loading">
+<body class="bg-[#0f172a] text-white font-sans antialiased app-loading">
 
   <!-- PWA Splash Screen -->
   <div id="splash-screen" style="
@@ -167,6 +167,7 @@
       setTimeout(() => {
         // Trigger exit/entry animations
         splash.classList.add('splash-exit');
+        document.body.classList.remove('bg-gray-50', 'text-gray-900');
         document.body.classList.remove('app-loading');
         document.body.classList.add('app-ready');
 
