@@ -40,7 +40,14 @@ const AppRoutes = () => {
         <Route path="/reports" element={<Reports />} />
         <Route path="/evacuation-centers" element={<EvacuationCenters />} />
         <Route path="/hotlines" element={<Hotlines />} />
-        <Route path="/forecasting" element={<Forecasting />} />
+        <Route 
+          path="/forecasting" 
+          element={
+            <ProtectedRoute requireAdmin>
+              <Forecasting />
+            </ProtectedRoute>
+          } 
+        />
         
         {/* Admin Only Route */}
         <Route

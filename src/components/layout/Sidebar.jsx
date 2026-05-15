@@ -10,10 +10,10 @@ const Sidebar = () => {
     { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
     { icon: AlertTriangle, label: 'Alerts', path: '/alerts' },
     { icon: FileText, label: 'My Reports', path: '/reports' },
-    { icon: CloudRain, label: 'Forecasting', path: '/forecasting' },
+    { icon: CloudRain, label: 'Forecasting', path: '/forecasting', adminOnly: true },
     { icon: MapPin, label: 'Evacuation Centers', path: '/evacuation-centers' },
     { icon: Phone, label: 'Emergency Hotlines', path: '/hotlines' },
-  ];
+  ].filter(item => !item.adminOnly || isAdmin);
 
   return (
     <aside className="w-64 bg-white border-r border-slate-100 min-h-screen fixed left-0 top-0 z-50 hidden md:flex flex-col">

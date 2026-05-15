@@ -9,10 +9,10 @@ const BottomNav = () => {
   const navItems = [
     { to: '/dashboard', label: 'Home', icon: LayoutDashboard },
     { to: '/alerts', label: 'Alerts', icon: AlertTriangle },
-    { to: '/forecasting', label: 'Forecast', icon: CloudRain },
+    { to: '/forecasting', label: 'Forecast', icon: CloudRain, adminOnly: true },
     { to: '/reports', label: 'Reports', icon: FileText },
     { to: '/evacuation-centers', label: 'Evac', icon: MapPin },
-  ];
+  ].filter(item => !item.adminOnly || isAdmin);
 
   return (
     <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-t border-slate-200 shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
