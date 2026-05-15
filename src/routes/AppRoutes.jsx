@@ -13,6 +13,7 @@ import Alerts from '../pages/user/Alerts';
 import Reports from '../pages/user/Reports';
 import EvacuationCenters from '../pages/user/EvacuationCenters';
 import Hotlines from '../pages/user/Hotlines';
+import Forecasting from '../pages/user/Forecasting';
 
 // Admin Pages
 import AdminPanel from '../pages/admin/AdminPanel';
@@ -39,6 +40,7 @@ const AppRoutes = () => {
         <Route path="/reports" element={<Reports />} />
         <Route path="/evacuation-centers" element={<EvacuationCenters />} />
         <Route path="/hotlines" element={<Hotlines />} />
+        <Route path="/forecasting" element={<Forecasting />} />
         
         {/* Admin Only Route */}
         <Route

@@ -10,12 +10,14 @@ const MainLayout = () => {
       <Sidebar />
 
       <div className="flex-1 md:ml-64 flex flex-col min-h-screen min-w-0">
-        {/* Top Navbar */}
-        <Navbar />
+        {/* Top Navbar - Fixed at top */}
+        <div className="sticky top-0 z-50 bg-white">
+          <Navbar />
+        </div>
 
         {/* Main Content */}
         <main className="flex-1">
-          <div className="max-w-[1600px] mx-auto px-4 sm:px-8 py-8 pb-24 md:pb-8">
+          <div className="mx-auto px-4 sm:px-8 py-8 pb-24 md:pb-8">
             <Outlet />
           </div>
         </main>

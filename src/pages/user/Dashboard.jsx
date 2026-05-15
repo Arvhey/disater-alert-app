@@ -59,8 +59,9 @@ const Dashboard = () => {
         </div>
 
         {/* Live Weather Widget */}
-        <div className="lg:col-span-1">
-          <div className="bg-gradient-to-br from-[#0ea5e9] to-[#3b82f6] rounded-2xl p-6 text-white shadow-lg shadow-blue-500/20 relative overflow-hidden">
+        <div className="lg:col-span-1 group">
+          <Link to="/forecasting" className="block h-full bg-gradient-to-br from-[#0ea5e9] to-[#3b82f6] rounded-2xl p-6 text-white shadow-lg shadow-blue-500/20 relative overflow-hidden transition-transform duration-300 hover:scale-[1.02] active:scale-[0.98]">
+
             {/* Decorative background shapes */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10"></div>
             
@@ -92,7 +93,7 @@ const Dashboard = () => {
                 <div className="text-xs font-bold text-white/90">{currentTime}</div>
               </div>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
 

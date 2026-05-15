@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, AlertTriangle, FileText, MapPin, Shield } from 'lucide-react';
+import { LayoutDashboard, AlertTriangle, FileText, MapPin, Shield, CloudRain } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 
 const BottomNav = () => {
@@ -9,9 +9,9 @@ const BottomNav = () => {
   const navItems = [
     { to: '/dashboard', label: 'Home', icon: LayoutDashboard },
     { to: '/alerts', label: 'Alerts', icon: AlertTriangle },
+    { to: '/forecasting', label: 'Forecast', icon: CloudRain },
     { to: '/reports', label: 'Reports', icon: FileText },
     { to: '/evacuation-centers', label: 'Evac', icon: MapPin },
-    ...(isAdmin ? [{ to: '/admin', label: 'Admin', icon: Shield }] : []),
   ];
 
   return (

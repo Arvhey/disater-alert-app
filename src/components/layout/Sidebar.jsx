@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, AlertTriangle, FileText, MapPin, Phone, Shield, LogOut, Bell } from 'lucide-react';
+import { LayoutDashboard, AlertTriangle, FileText, MapPin, Phone, Shield, LogOut, Bell, CloudRain } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 
 const Sidebar = () => {
@@ -10,6 +10,7 @@ const Sidebar = () => {
     { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
     { icon: AlertTriangle, label: 'Alerts', path: '/alerts' },
     { icon: FileText, label: 'My Reports', path: '/reports' },
+    { icon: CloudRain, label: 'Forecasting', path: '/forecasting' },
     { icon: MapPin, label: 'Evacuation Centers', path: '/evacuation-centers' },
     { icon: Phone, label: 'Emergency Hotlines', path: '/hotlines' },
   ];

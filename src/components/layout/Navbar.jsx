@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { User, LogOut, Settings, ChevronDown, Menu } from 'lucide-react';
+import { User, LogOut, Settings, ChevronDown, Menu, Shield } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 
 const Navbar = () => {
@@ -18,12 +18,9 @@ const Navbar = () => {
   const location = user?.user_metadata?.barangay || 'Poblacion';
 
   return (
-    <header className="sticky top-0 z-40 bg-white border-b border-slate-100 h-20 flex items-center justify-between px-4 sm:px-8">
+    <header className="h-20 bg-white border-b border-slate-100 flex items-center justify-between px-4 sm:px-8">
       <div className="flex items-center gap-3">
-        {/* Mobile menu button */}
-        <button className="md:hidden p-2 -ml-2 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-50 transition-colors">
-          <Menu className="h-6 w-6" />
-        </button>
+        {/* Mobile menu removed since we use BottomNav */}
 
         {/* Mobile Logo (Visible only when Sidebar is hidden) */}
         <Link to="/dashboard" className="md:hidden flex items-center gap-2">
@@ -43,8 +40,8 @@ const Navbar = () => {
         {/* User Menu */}
         <div className="relative">
           <button
-            onClick={() => setShowProfile(!showProfile)}
-            className="flex items-center gap-3 px-2 py-1.5 rounded-xl hover:bg-slate-50 transition-colors"
+            onClick={() => window.innerWidth < 1024 && setShowProfile(!showProfile)}
+            className="flex items-center gap-3 px-2 py-1.5 rounded-xl lg:hover:bg-transparent transition-colors cursor-default lg:cursor-default"
           >
             <div className="w-10 h-10 rounded-full border-2 border-[#0284c7] text-[#0284c7] flex items-center justify-center bg-sky-50">
               <User className="h-5 w-5" />
@@ -60,11 +57,11 @@ const Navbar = () => {
               </div>
               <p className="text-[11px] font-semibold text-slate-400 mt-1 pr-1">{location}</p>
             </div>
-            <ChevronDown className={`h-4 w-4 text-slate-400 transition-transform ${showProfile ? 'rotate-180' : ''}`} />
+            <ChevronDown className={`h-4 w-4 text-slate-400 transition-transform lg:hidden ${showProfile ? 'rotate-180' : ''}`} />
           </button>
 
           {showProfile && (
-            <>
+            <div className="lg:hidden">
               <div className="fixed inset-0 z-40" onClick={() => setShowProfile(false)} />
               <div className="absolute top-full right-0 mt-2 w-56 bg-white shadow-xl rounded-2xl border border-slate-100 overflow-hidden z-50">
                 <div className="p-4 bg-slate-50 border-b border-slate-100">
@@ -80,6 +77,16 @@ const Navbar = () => {
                     <Settings className="h-4 w-4 text-slate-400" />
                     Settings
                   </Link>
+                  {isAdmin && (
+                    <Link
+                      to="/admin"
+                      onClick={() => setShowProfile(false)}
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 text-slate-700 text-sm font-semibold transition-colors mt-1"
+                    >
+                      <Shield className="h-4 w-4 text-slate-400" />
+                      Admin Panel
+                    </Link>
+                  )}
                   <button
                     onClick={handleSignOut}
                     className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-red-50 text-red-600 text-sm font-semibold transition-colors mt-1"
@@ -89,7 +96,7 @@ const Navbar = () => {
                   </button>
                 </div>
               </div>
-            </>
+            </div>
           )}
         </div>
       </div>
