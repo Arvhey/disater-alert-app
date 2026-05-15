@@ -1,4 +1,4 @@
-const CACHE_NAME = 'disaster-alert-cache-v2';
+const CACHE_NAME = 'disaster-alert-cache-v3';
 
 self.addEventListener('install', (event) => {
   // Force the new SW to activate immediately, replacing the old one
