@@ -4,8 +4,8 @@
   "description": "Polomolok Disaster Alert and Community Reporting System",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#0284c7",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
   "icons": [
     {
       "src": "/vite.svg?v=2",

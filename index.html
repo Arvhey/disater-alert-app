@@ -6,7 +6,7 @@
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <link rel="apple-touch-icon" href="/vite.svg" />
   <link rel="manifest" href="/manifest.json" />
-  <meta name="theme-color" content="#0284c7" />
+  <meta name="theme-color" content="#0f172a" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Polomolok Disaster Alert System</title>
   <!-- Leaflet Map CSS (Reliable CDN) -->
@@ -25,7 +25,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
-<body class="bg-gray-50 text-gray-900 font-sans antialiased">
+  <body class="bg-gray-50 text-gray-900 font-sans antialiased app-loading">
 
   <!-- PWA Splash Screen -->
   <div id="splash-screen" style="
@@ -38,7 +38,7 @@
       align-items: center;
       justify-content: center;
       gap: 28px;
-      transition: opacity 0.5s ease;
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     ">
     <!-- App Icon -->
     <img src="/vite.svg" alt="Logo" style="
@@ -70,16 +70,16 @@
         ">MDRRMO Disaster Alert App</p>
     </div>
 
-      <!-- Dual Ring Spinner -->
-      <div style="position: relative; width: 56px; height: 56px;">
-        <!-- Outer ring: clockwise -->
-        <div style="
+    <!-- Dual Ring Spinner -->
+    <div style="position: relative; width: 56px; height: 56px;">
+      <!-- Outer ring: clockwise -->
+      <div style="
           position: absolute;
           inset: 0;
           border-radius: 50%;
           border: 3px solid rgba(255,255,255,0.08);
         "></div>
-        <div style="
+      <div style="
           position: absolute;
           inset: 0;
           border-radius: 50%;
@@ -88,14 +88,14 @@
           border-right-color: #38bdf8;
           animation: spin-cw 0.9s linear infinite;
         "></div>
-        <!-- Inner ring: counterclockwise -->
-        <div style="
+      <!-- Inner ring: counterclockwise -->
+      <div style="
           position: absolute;
           inset: 10px;
           border-radius: 50%;
           border: 3px solid rgba(255,255,255,0.08);
         "></div>
-        <div style="
+      <div style="
           position: absolute;
           inset: 10px;
           border-radius: 50%;
@@ -104,19 +104,51 @@
           border-left-color: #7dd3fc;
           animation: spin-ccw 0.7s linear infinite;
         "></div>
-      </div>
     </div>
+  </div>
 
   <style>
     @keyframes spin-cw {
       to { transform: rotate(360deg); }
     }
+
     @keyframes spin-ccw {
       to { transform: rotate(-360deg); }
+    }
+
+    @keyframes app-entry {
+      from { 
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to { 
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .app-loading #root {
+      opacity: 0;
+    }
+
+    .app-ready #root {
+      animation: app-entry 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .splash-exit {
+      opacity: 0 !important;
+      pointer-events: none;
+    }
+
+    @media (min-width: 768px) {
+      .splash-exit {
+        transform: scale(1.1);
+      }
     }
   </style>
 
   <div id="root"></div>
+
   <script>
     // Show splash for minimum 3 seconds, then hide once React mounts
     const splash = document.getElementById('splash-screen');
@@ -128,8 +160,12 @@
       const elapsed = Date.now() - startTime;
       const remaining = Math.max(0, MIN_DISPLAY - elapsed);
       setTimeout(() => {
-        splash.style.opacity = '0';
-        setTimeout(() => splash.remove(), 500);
+        // Trigger exit/entry animations
+        splash.classList.add('splash-exit');
+        document.body.classList.remove('app-loading');
+        document.body.classList.add('app-ready');
+        
+        setTimeout(() => splash.remove(), 800);
       }, remaining);
     }
 
