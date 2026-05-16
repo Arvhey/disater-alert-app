@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import Navbar from '../components/layout/Navbar';
 import Sidebar from '../components/layout/Sidebar';
 import BottomNav from '../components/layout/BottomNav';
@@ -36,19 +37,13 @@ const playAlertSound = () => {
 };
 
 const MainLayout = () => {
-  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
   const { isAdmin } = useAuth();
 
   useEffect(() => {
-    const handleResize = () => setIsDesktop(window.innerWidth >= 768);
-    window.addEventListener('resize', handleResize);
-    
     if ("Notification" in window && Notification.permission === "default") {
       Notification.requestPermission();
     }
-    
-    return () => window.removeEventListener('resize', handleResize);
-  }, [isAdmin]);
+  }, []);
 
   // Admin Watchdog & Admin Notifications
   useEffect(() => {
@@ -79,17 +74,16 @@ const MainLayout = () => {
       })
       .subscribe();
 
-    // EXTREME FRONTEND HACK: The "Background Watchdog"
     const silentAudio = new Audio("data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA");
     silentAudio.loop = true;
     silentAudio.volume = 0.01;
-    
+
     const startWatchdog = () => {
       silentAudio.play().catch(e => console.log("Watchdog waiting for interaction..."));
       document.removeEventListener('click', startWatchdog);
       document.removeEventListener('touchstart', startWatchdog);
     };
-    
+
     document.addEventListener('click', startWatchdog);
     document.addEventListener('touchstart', startWatchdog);
 
@@ -134,35 +128,42 @@ const MainLayout = () => {
   }, []);
 
   return (
-    <div className={`w-full bg-[#0f172a] text-white flex relative font-sans selection:bg-brand-500/30 ${isDesktop ? 'h-screen overflow-hidden' : 'min-h-screen'}`}>
+    <div className="w-full bg-[#0f172a] text-white flex lg:relative font-sans selection:bg-brand-500/30 min-h-screen lg:h-screen lg:overflow-hidden">
       {/* Background FX */}
-      <div className="fixed inset-0 z-0">
+      <div className="fixed inset-0 z-0 pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-brand-500/5 blur-[120px]" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-brand-400/5 blur-[120px]" />
       </div>
 
-      {/* Sidebar - Locked to Left */}
-      {isDesktop && <Sidebar />}
+      {/* Sidebar — CSS-controlled, visible on lg+ */}
+      <div className="hidden lg:block">
+        <Sidebar />
+      </div>
 
-      {/* Main Framework */}
-      <div className={`flex-1 flex flex-col min-w-0 relative transition-all duration-300 ${isDesktop ? 'md:pl-72 h-full' : 'pl-0 min-h-screen'}`}>
-        {/* PWA Install Prompt */}
-        <PwaInstallBanner />
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col min-w-0 relative lg:pl-72 min-h-screen lg:h-screen">
 
-        {/* Persistent Top Nav */}
-        <Navbar />
+        {/* Global Headers (PWA Banner + Navbar) */}
+        <div className="sticky top-0 z-[100] w-full bg-[#0f172a]">
+          <PwaInstallBanner />
+          <Navbar />
+        </div>
 
-        {/* Intelligence Area */}
-        <main className={`flex-1 relative z-10 no-scrollbar sm:custom-scrollbar scroll-smooth ${isDesktop ? 'overflow-y-auto overflow-x-hidden' : ''}`}>
-          <div className="w-full md:max-w-[1600px] md:mx-auto px-4 sm:px-10 py-4 sm:py-10 pb-32 md:pb-10">
+        {/* Scrollable Content Area */}
+        <main className="flex-1 relative z-10 no-scrollbar scroll-smooth lg:overflow-y-auto lg:overflow-x-hidden">
+          <div className="w-full lg:max-w-[1600px] lg:mx-auto px-4 lg:px-10 py-4 lg:py-10 pb-40 lg:pb-10">
             <Outlet />
           </div>
         </main>
-
-        {/* Mobile Bottom Ops Nav */}
-        {!isDesktop && <BottomNav />}
       </div>
 
+      {/* Bottom Nav — Strictly fixed to viewport using a Portal to body */}
+      {typeof document !== 'undefined' && createPortal(
+        <div className="lg:hidden fixed bottom-0 left-0 right-0 z-[999]">
+          <BottomNav />
+        </div>,
+        document.body
+      )}
     </div>
   );
 };

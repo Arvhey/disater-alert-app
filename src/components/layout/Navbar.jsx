@@ -47,7 +47,7 @@ const Navbar = () => {
   const location = user?.user_metadata?.barangay || 'Poblacion';
 
   return (
-    <header className="h-16 sm:h-20 bg-[#0f172a]/80 backdrop-blur-xl border-b border-white/5 flex items-center justify-between px-4 sm:px-10 sticky top-0 z-[100] shadow-2xl">
+    <header className="h-16 sm:h-20 bg-[#0f172a]/80 backdrop-blur-xl border-b border-white/10 flex items-center justify-between px-4 sm:px-10 sticky top-0 z-[100] shadow-2xl">
       <div className="flex items-center gap-3">
         {/* Mobile menu removed since we use BottomNav */}
 

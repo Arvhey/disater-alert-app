@@ -13,8 +13,8 @@
     background-color: #0f172a;
   }
 
-  /* Allow native pull-to-refresh on mobile */
-  @media (max-width: 767px) {
+  /* Allow native pull-to-refresh on mobile (matches JS 1024px breakpoint) */
+  @media (max-width: 1023px) {
     html, body {
       height: auto !important;
       overflow-y: auto !important;
@@ -170,6 +170,15 @@
 
 .glass-brand {
   @apply bg-brand-500/10 backdrop-blur-2xl border border-brand-500/20 shadow-2xl;
+}
+
+/* Safe Area Utilities */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.pt-safe {
+  padding-top: env(safe-area-inset-top);
 }
 
 /* Animations */

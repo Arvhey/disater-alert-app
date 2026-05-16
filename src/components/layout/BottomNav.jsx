@@ -17,8 +17,8 @@ const BottomNav = () => {
   ].filter(item => !item.adminOnly || isAdmin);
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-[100] bg-[#1e293b]/95 backdrop-blur-2xl border-t border-white/5 rounded-t-[1.5rem] shadow-[0_-10px_40px_rgba(0,0,0,0.4)] overflow-visible pb-safe">
-      <div className="flex items-center justify-between h-[64px] px-1 sm:px-2 overflow-visible">
+    <nav className="fixed bottom-0 left-0 right-0 z-[100] bg-[#1e293b]/80 backdrop-blur-2xl border-t border-white/10 rounded-t-[2rem] shadow-[0_-15px_40px_rgba(0,0,0,0.5)] overflow-visible pb-safe">
+      <div className="flex items-center justify-between h-[72px] px-2 overflow-visible">
         {navItems.map(({ to, label, icon: Icon, isMain }) => {
           const active = location.pathname === to || (to !== '/dashboard' && location.pathname.startsWith(to));
           return (
@@ -36,7 +36,7 @@ const BottomNav = () => {
               }`}>
                 <Icon className={`${isMain ? 'h-5 w-5' : 'h-4 w-4 sm:h-5 sm:w-5'} transition-transform ${active && !isMain ? 'scale-110' : 'scale-100'}`} />
               </div>
-              <span className={`text-[7px] sm:text-[8px] font-black uppercase tracking-wider ${isMain ? 'mt-7' : ''} ${active ? 'text-brand-400' : 'text-white/30'}`}>
+              <span className={`text-[7px] sm:text-[9px] font-black uppercase tracking-wider ${isMain ? 'mt-9' : ''} ${active ? 'text-brand-400' : 'text-white/30'}`}>
                 {label}
               </span>
             </Link>
