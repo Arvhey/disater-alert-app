@@ -13,6 +13,15 @@
     background-color: #0f172a;
   }
 
+  /* Allow native pull-to-refresh on mobile */
+  @media (max-width: 767px) {
+    html, body {
+      height: auto !important;
+      overflow-y: auto !important;
+      overscroll-behavior-y: auto !important;
+    }
+  }
+
   body {
     @apply text-white;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
