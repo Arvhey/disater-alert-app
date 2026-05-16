@@ -21,28 +21,6 @@ export const useReports = (userId = null) => {
 
   useEffect(() => {
     fetchReports();
-
-    // REAL-TIME REPORT NOTIFICATION (For Admins)
-    const channel = supabase
-      .channel('reports-realtime')
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'reports' }, (payload) => {
-        // If we are in Admin mode (no specific userId), show a notification
-        if (!userId) {
-          toast.info(`📋 New Incident Report: ${payload.new.type} in ${payload.new.barangay}`, {
-            position: "bottom-right",
-            autoClose: 5000,
-          });
-        }
-        fetchReports();
-      })
-      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'reports' }, () => {
-        fetchReports();
-      })
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
   }, [fetchReports, userId]);
 
   return { reports, loading, error, refetch: fetchReports };
