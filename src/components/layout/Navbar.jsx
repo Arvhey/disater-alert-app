@@ -10,7 +10,7 @@ const Navbar = () => {
   const [showProfile, setShowProfile] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const handleRefresh = () => {
+  const handleRefresh = async () => {
     setIsRefreshing(true);
     toast.info('UPDATING TACTICAL DATA...', { 
       position: 'top-center', 
@@ -18,6 +18,19 @@ const Navbar = () => {
       hideProgressBar: true,
       theme: 'dark'
     });
+    
+    // Attempt to update service worker
+    if ('serviceWorker' in navigator) {
+      try {
+        const registrations = await navigator.serviceWorker.getRegistrations();
+        for (let registration of registrations) {
+          await registration.update();
+        }
+      } catch (err) {
+        console.error('SW Update failed:', err);
+      }
+    }
+
     // Add a slight delay for visual feedback
     setTimeout(() => {
       window.location.reload();
