@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 
 const playAlertSound = () => {
   try {
-    const sirenUrl = 'https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3';
+    const sirenUrl = 'https://assets.mixkit.co/active_storage/sfx/2565/2565-preview.mp3';
     const audio = new Audio(sirenUrl);
     
     audio.loop = true;

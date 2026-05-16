@@ -14,8 +14,8 @@ import { SEVERITY_LEVELS, BARANGAYS } from '../../utils/constants';
 
 const AdminPanel = () => {
   const playAlertSound = () => {
-    // High-fidelity Police Siren SFX
-    const sirenUrl = 'https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3';
+    // High-fidelity Classic Long-Wail Police Siren
+    const sirenUrl = 'https://assets.mixkit.co/active_storage/sfx/2565/2565-preview.mp3';
     const audio = new Audio(sirenUrl);
     
     audio.loop = true;
