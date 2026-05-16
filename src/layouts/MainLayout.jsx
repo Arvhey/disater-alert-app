@@ -10,28 +10,19 @@ import { toast } from 'react-toastify';
 
 const playAlertSound = () => {
   try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = ctx.createOscillator();
-    const gainNode = ctx.createGain();
-
-    osc.type = 'triangle';
-    osc.frequency.setValueAtTime(440, ctx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.1);
-    osc.frequency.setValueAtTime(440, ctx.currentTime + 0.2);
-    osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.3);
-
-    gainNode.gain.setValueAtTime(0, ctx.currentTime);
-    gainNode.gain.linearRampToValueAtTime(0.5, ctx.currentTime + 0.05);
-    gainNode.gain.setValueAtTime(0.5, ctx.currentTime + 0.3);
-    gainNode.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.5);
-
-    osc.connect(gainNode);
-    gainNode.connect(ctx.destination);
-
-    osc.start();
-    osc.stop(ctx.currentTime + 0.5);
+    const sirenUrl = 'https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3';
+    const audio = new Audio(sirenUrl);
+    
+    audio.loop = true;
+    audio.play().catch(err => console.log('Background Audio playback blocked', err));
+    
+    // Play for 10 seconds as requested
+    setTimeout(() => {
+      audio.pause();
+      audio.currentTime = 0;
+    }, 10000);
   } catch (e) {
-    console.warn("Audio not supported or blocked", e);
+    console.warn("Background audio failed", e);
   }
 };
 
