@@ -13,8 +13,23 @@ import Loader from '../../components/common/Loader';
 import { SEVERITY_LEVELS, BARANGAYS } from '../../utils/constants';
 
 const AdminPanel = () => {
+  const playAlertSound = () => {
+    const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
+    audio.play().catch(err => console.log('Audio playback failed until user interacts with the page.', err));
+  };
+
   const { alerts, loading: alertsLoading } = useAlerts();
-  const { reports, loading: reportsLoading } = useReports();
+  const { reports, loading: reportsLoading } = useReports(null, (newReport) => {
+    playAlertSound();
+    toast.info(`NEW TACTICAL REPORT: ${newReport.type} at ${newReport.barangay}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
+  });
   const [centers, setCenters] = useState([]);
   const [activeTab, setActiveTab] = useState('alerts');
   const [isModalOpen, setIsModalOpen] = useState(false);

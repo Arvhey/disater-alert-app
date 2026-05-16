@@ -1,12 +1,28 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { User, LogOut, Settings, ChevronDown, Menu, Shield } from 'lucide-react';
+import { toast } from 'react-toastify';
+import { User, LogOut, Settings, ChevronDown, Menu, Shield, RotateCw } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 
 const Navbar = () => {
   const { user, signOut, isAdmin } = useAuth();
   const navigate = useNavigate();
   const [showProfile, setShowProfile] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const handleRefresh = () => {
+    setIsRefreshing(true);
+    toast.info('UPDATING TACTICAL DATA...', { 
+      position: 'top-center', 
+      autoClose: 1000, 
+      hideProgressBar: true,
+      theme: 'dark'
+    });
+    // Add a slight delay for visual feedback
+    setTimeout(() => {
+      window.location.reload();
+    }, 800);
+  };
 
   const handleSignOut = async () => {
     await signOut();
@@ -34,7 +50,16 @@ const Navbar = () => {
         </Link>
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2 sm:gap-4">
+        {/* Refresh Button */}
+        <button
+          onClick={handleRefresh}
+          className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-brand-400 hover:bg-brand-500/10 hover:border-brand-500/30 transition-all active:scale-90"
+          title="Refresh Tactical Feed"
+        >
+          <RotateCw className={`h-5 w-5 ${isRefreshing ? 'animate-spin text-brand-400' : ''}`} />
+        </button>
+
         {/* User Menu */}
         <div className="relative">
           <button

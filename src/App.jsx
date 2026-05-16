@@ -2,12 +2,14 @@ import { BrowserRouter } from 'react-router-dom';
 import AppRoutes from './routes/AppRoutes';
 import { AuthProvider } from './context/AuthContext';
 import { ToastContainer } from 'react-toastify';
+import PwaInstallBanner from './components/layout/PwaInstallBanner';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <PwaInstallBanner />
         <AppRoutes />
         <ToastContainer 
           position="top-right"

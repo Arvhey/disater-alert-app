@@ -42,13 +42,14 @@ const MainLayout = () => {
     const handleResize = () => setIsDesktop(window.innerWidth >= 768);
     window.addEventListener('resize', handleResize);
     
-    if (isAdmin && "Notification" in window && Notification.permission === "default") {
+    if ("Notification" in window && Notification.permission === "default") {
       Notification.requestPermission();
     }
     
     return () => window.removeEventListener('resize', handleResize);
   }, [isAdmin]);
 
+  // Admin Watchdog & Admin Notifications
   useEffect(() => {
     if (!isAdmin) return;
 
@@ -78,12 +79,9 @@ const MainLayout = () => {
       .subscribe();
 
     // EXTREME FRONTEND HACK: The "Background Watchdog"
-    // Playing a continuous, silent audio stream tricks mobile OS battery managers 
-    // into thinking this is an active media player (like Spotify or YouTube).
-    // This prevents the OS from killing our Supabase WebSocket when the app is minimized!
     const silentAudio = new Audio("data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA");
     silentAudio.loop = true;
-    silentAudio.volume = 0.01; // Virtually silent
+    silentAudio.volume = 0.01;
     
     const startWatchdog = () => {
       silentAudio.play().catch(e => console.log("Watchdog waiting for interaction..."));
@@ -91,7 +89,6 @@ const MainLayout = () => {
       document.removeEventListener('touchstart', startWatchdog);
     };
     
-    // Audio requires user interaction to start
     document.addEventListener('click', startWatchdog);
     document.addEventListener('touchstart', startWatchdog);
 
@@ -102,6 +99,38 @@ const MainLayout = () => {
       document.removeEventListener('touchstart', startWatchdog);
     };
   }, [isAdmin]);
+
+  // Citizen / Global Alert Notifications
+  useEffect(() => {
+    const alertChannel = supabase
+      .channel('global-citizen-alerts')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'alerts' }, (payload) => {
+        playAlertSound();
+
+        if ("Notification" in window && Notification.permission === "granted") {
+          new Notification("⚠️ MDRRMO OFFICIAL ALERT", {
+            body: payload.new.title,
+            icon: "/vite.svg"
+          });
+        }
+
+        toast.error(`MDRRMO ALERT: ${payload.new.title}`, {
+          position: "top-center",
+          autoClose: 15000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "dark",
+          className: "border-2 border-amber-500 bg-[#0f172a] text-white font-black tracking-widest uppercase shadow-[0_0_40px_rgba(245,158,11,0.6)]",
+        });
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(alertChannel);
+    };
+  }, []);
 
   return (
     <div className="h-screen w-full bg-[#0f172a] text-white flex overflow-hidden relative font-sans selection:bg-brand-500/30">
