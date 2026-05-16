@@ -30,7 +30,7 @@ const MainLayout = () => {
         <Navbar />
 
         {/* Scrollable Intelligence Area */}
-        <main className="flex-1 overflow-y-auto relative z-10 no-scrollbar sm:custom-scrollbar">
+        <main className="flex-1 overflow-y-auto overflow-x-hidden relative z-10 no-scrollbar sm:custom-scrollbar">
           <div className="w-full md:max-w-[1600px] md:mx-auto px-4 sm:px-10 py-4 sm:py-10 pb-32 md:pb-10">
             <Outlet />
           </div>

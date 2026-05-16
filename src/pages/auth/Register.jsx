@@ -48,7 +48,7 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex w-full">
+    <div className="min-h-screen flex w-full font-century-gothic">
       {/* Left hero panel */}
       <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] flex-col justify-between p-16 relative overflow-hidden border-r border-white/5">
         <div className="absolute inset-0">

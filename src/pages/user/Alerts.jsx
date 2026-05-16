@@ -57,7 +57,7 @@ const Alerts = () => {
   });
 
   return (
-    <div className="max-w-4xl space-y-6 sm:space-y-8 relative z-10 px-1 sm:px-0">
+    <div className="max-w-6xl mx-auto w-full space-y-6 sm:space-y-8 relative z-10 px-4 sm:px-0">
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-2">
         <div>

@@ -64,14 +64,30 @@ const RegisterModal = ({ isOpen, onClose }) => {
         }
       `}</style>
       <div className="absolute inset-0 bg-transparent" onClick={onClose} />
-      <div className="relative w-full max-w-md bg-white/10 backdrop-blur-3xl rounded-[32px] border border-white/20 shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in duration-300">
+      <div className="relative w-full max-w-md bg-white/10 backdrop-blur-3xl rounded-[32px] border border-white/20 shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in duration-300 font-century-gothic">
+        {/* Modal Header with Logo and Close Button */}
         <div className="flex items-center justify-between px-8 py-5 border-b border-white/10">
-          <h3 className="text-xl font-bold text-white tracking-tight">Create Account</h3>
-          <button onClick={onClose} className="p-2 hover:bg-white/10 rounded-full text-white/40 hover:text-white transition-all">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center shadow-lg shadow-brand-500/20">
+              <Bell className="h-5 w-5 text-white" />
+            </div>
+            <div>
+              <p className="font-bold text-white text-sm">Polomolok DACS</p>
+              <p className="text-[10px] text-brand-200 font-medium opacity-80 uppercase tracking-wider">Disaster Alert System</p>
+            </div>
+          </div>
+          <button 
+            onClick={onClose} 
+            className="p-2 hover:bg-white/10 rounded-full text-white/40 hover:text-white transition-all focus:outline-none"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
+        </div>
+
+        <div className="px-8 py-4">
+          <h3 className="text-xl font-bold text-white tracking-tight">Create Account</h3>
         </div>
         
         <form onSubmit={handleSubmit} className="p-8 space-y-4 overflow-y-auto max-h-[65vh] glass-scroll">

@@ -102,9 +102,18 @@ const EvacuationCenters = () => {
 
   const centerOnMap = (lat, lng, centerId) => {
     if (leafletMap.current && lat && lng) {
-      setActiveCenterId(centerId); // This triggers the marker to appear
+      setActiveCenterId(centerId);
       leafletMap.current.setView([lat, lng], 18);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+      if (mapRef.current) {
+        const scrollContainer = document.querySelector('main');
+        if (scrollContainer) {
+          scrollContainer.scrollTo({
+            top: mapRef.current.offsetTop - 20,
+            behavior: 'smooth'
+          });
+        }
+      }
     }
   };
 
@@ -173,9 +182,9 @@ const EvacuationCenters = () => {
           onChange={(e) => setSelectedBarangay(e.target.value)}
           className="w-full h-14 sm:h-16 px-6 rounded-2xl border border-white/10 bg-[#1e293b] shadow-2xl text-sm sm:text-base font-black text-white outline-none focus:bg-white/10 focus:border-emerald-500/50 transition-all cursor-pointer uppercase tracking-widest"
         >
-          <option value="All">Global Sectors</option>
+          <option value="All" className="bg-[#1e293b] text-white">Global Sectors</option>
           {BARANGAYS.map(b => (
-            <option key={b} value={b}>{b}</option>
+            <option key={b} value={b} className="bg-[#1e293b] text-white">{b}</option>
           ))}
         </select>
       </div>

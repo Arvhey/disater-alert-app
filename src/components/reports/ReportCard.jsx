@@ -52,16 +52,12 @@ const ReportCard = ({ report, isAdmin, onStatusChange, onDelete }) => {
       )}
 
       <div className="p-5 sm:p-7">
-        {/* Type + status */}
+        {/* Type */}
         <div className="flex items-center justify-between gap-3 mb-4 sm:mb-6">
           <div className="flex items-center gap-3">
             <span className="text-xl sm:text-3xl drop-shadow-lg">{typeEmoji[typeKey] || '⚠️'}</span>
             <span className="text-base sm:text-xl font-black text-white uppercase tracking-tight leading-tight">{report.type || report.title}</span>
           </div>
-          <span className={`inline-flex items-center gap-1.5 text-[8px] sm:text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border shadow-xl flex-shrink-0 ${status.class}`}>
-            <StatusIcon className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-            {status.label}
-          </span>
         </div>
 
         {/* Description */}

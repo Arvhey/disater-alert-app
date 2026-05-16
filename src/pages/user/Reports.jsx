@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FileText, Plus, Search, MapPin, Upload, X } from 'lucide-react';
+import { FileText, Plus, Search, MapPin, Upload, X, Camera } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../hooks/useAuth';
 import { useReports } from '../../hooks/useReports';
@@ -135,11 +135,18 @@ const Reports = () => {
                 <button onClick={() => { setImageFile(null); setImagePreview(null); }} className="absolute top-3 right-3 p-2 bg-black/60 text-white rounded-xl hover:bg-red-500 transition-colors shadow-lg"><X className="h-4 w-4" /></button>
               </div>
             ) : (
-              <label className="flex flex-col items-center justify-center h-40 border-2 border-dashed border-white/10 rounded-2xl cursor-pointer hover:bg-white/5 hover:border-brand-500/50 transition-all group">
-                <Upload className="h-8 w-8 text-white/20 group-hover:text-brand-400 transition-colors" />
-                <span className="text-[10px] font-black text-white/20 uppercase tracking-widest mt-3 group-hover:text-white transition-colors">Upload Intel Photo</span>
-                <input type="file" className="hidden" onChange={handleImageChange} accept="image/*" />
-              </label>
+              <div className="grid grid-cols-2 gap-3">
+                <label className="flex flex-col items-center justify-center h-32 border border-white/10 bg-white/5 rounded-2xl cursor-pointer hover:bg-brand-500/20 hover:border-brand-500/50 transition-all group shadow-inner">
+                  <Camera className="h-7 w-7 text-white/30 group-hover:text-brand-400 transition-colors" />
+                  <span className="text-[10px] font-black text-white/30 uppercase tracking-widest mt-3 group-hover:text-white transition-colors">Camera</span>
+                  <input type="file" className="hidden" onChange={handleImageChange} accept="image/*" capture="environment" />
+                </label>
+                <label className="flex flex-col items-center justify-center h-32 border border-white/10 bg-white/5 rounded-2xl cursor-pointer hover:bg-brand-500/20 hover:border-brand-500/50 transition-all group shadow-inner">
+                  <Upload className="h-7 w-7 text-white/30 group-hover:text-brand-400 transition-colors" />
+                  <span className="text-[10px] font-black text-white/30 uppercase tracking-widest mt-3 group-hover:text-white transition-colors">Gallery</span>
+                  <input type="file" className="hidden" onChange={handleImageChange} accept="image/*" />
+                </label>
+              </div>
             )}
           </div>
           <Button onClick={handleSubmit} fullWidth size="lg" loading={submitting}>Transmit Report</Button>

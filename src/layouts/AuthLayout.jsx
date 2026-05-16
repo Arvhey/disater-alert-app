@@ -55,25 +55,22 @@ const AuthLayout = () => {
     <div className="min-h-screen bg-[#0f172a] relative flex flex-col">
       {/* PWA Install Banner - Only visible on mobile */}
       {showInstall && (
-        <div className="md:hidden relative z-50 bg-[#0f172a] text-white px-4 py-3 flex items-center justify-between shadow-md">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-[#0284c7] rounded-lg flex items-center justify-center">
-              <Download className="w-4 h-4 text-white" />
+        <div className="md:hidden relative z-50 bg-[#0f172a] text-white px-4 py-3 sm:px-6 flex items-center justify-between gap-3 shadow-xl border-b border-white/5">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="w-10 h-10 bg-brand-500/20 border border-brand-400/30 rounded-xl flex items-center justify-center flex-shrink-0">
+              <Download className="w-5 h-5 text-brand-400" />
             </div>
-            <div>
-              <p className="text-sm font-bold leading-tight">Install Polomolok App</p>
-              <p className="text-[10px] text-slate-300 font-medium">Get the official mobile app for real-time alerts</p>
+            <div className="min-w-0">
+              <p className="text-sm font-bold leading-tight truncate">Install Polomolok App</p>
+              <p className="text-[10px] text-slate-300 font-medium line-clamp-1 opacity-80">Get the official mobile app</p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex-shrink-0">
             <button 
               onClick={handleInstallClick}
-              className="bg-[#0284c7] hover:bg-sky-600 text-white text-xs font-bold px-4 py-2 rounded-lg transition-colors"
+              className="bg-brand-500 hover:bg-brand-600 text-white text-[10px] font-black uppercase tracking-wider px-4 py-2.5 rounded-xl transition-all shadow-lg shadow-brand-500/30 active:scale-95 animate-pulse-glow"
             >
               Install
-            </button>
-            <button onClick={() => setShowInstall(false)} className="p-1 text-slate-400 hover:text-white">
-              <X className="w-5 h-5" />
             </button>
           </div>
         </div>

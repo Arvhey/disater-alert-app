@@ -1,5 +1,7 @@
 import { createContext, useState, useEffect } from 'react';
 import { supabase } from '../supabase';
+import { toast } from 'react-toastify';
+import { LogOut } from 'lucide-react';
 
 export const AuthContext = createContext();
 
@@ -53,8 +55,17 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+
   const signOut = async () => {
-    await supabase.auth.signOut();
+    try {
+      await supabase.auth.signOut();
+      toast('Signed out successfully!', {
+        icon: <LogOut className="w-5 h-5 text-brand-400" />,
+        className: 'border-brand-500/30'
+      });
+    } catch (error) {
+      toast.error('Error signing out.');
+    }
   };
 
   const value = {

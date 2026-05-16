@@ -33,6 +33,13 @@ const Dashboard = () => {
     return <div className="flex justify-center items-center h-64"><Loader /></div>;
   }
 
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'Good morning';
+    if (hour < 18) return 'Good afternoon';
+    return 'Good evening';
+  };
+
   return (
     <div className="space-y-4 sm:space-y-10 w-full sm:max-w-7xl sm:mx-auto relative z-10">
       {/* Top Section: Banner & Weather */}
@@ -40,7 +47,7 @@ const Dashboard = () => {
         {/* Welcome Banner */}
         <div className="lg:col-span-2 flex flex-col justify-center pt-2 sm:pt-4 px-1 sm:px-0">
           <h1 className="text-lg sm:text-5xl font-black text-white mb-2 sm:mb-4 tracking-tight leading-tight uppercase">
-            Good morning, <br className="sm:hidden" />{displayName} <span className="inline-block hover:animate-wave origin-bottom-right">👋</span>
+            {getGreeting()}, <br className="sm:hidden" />{displayName} <span className="inline-block hover:animate-wave origin-bottom-right">👋</span>
           </h1>
           <p className="text-brand-100/60 text-xs sm:text-lg font-bold max-w-xl leading-relaxed">
             MDRRMO Polomolok Intelligence Network active.

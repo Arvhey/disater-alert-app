@@ -55,7 +55,9 @@ const Login = () => {
     if (Object.keys(errs).length) { setErrors(errs); return; }
     setLoading(true);
     try {
-      await signIn(loginForm.email, loginForm.password);
+      const email = loginForm.email.trim();
+      const password = loginForm.password; // Usually passwords shouldn't be trimmed as spaces might be intentional, but email definitely should
+      await signIn(email, password);
       toast.success('Welcome back!');
       navigate(from, { replace: true });
     } catch (err) {
@@ -82,7 +84,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex w-full">
+    <div className="min-h-screen flex w-full font-century-gothic">
       {/* Left hero panel */}
       <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] flex-col justify-between p-16 relative overflow-hidden border-r border-white/5">
         <div className="absolute inset-0">
@@ -132,14 +134,26 @@ const Login = () => {
         <div className="w-full max-w-md bg-white/10 backdrop-blur-3xl p-6 sm:p-8 lg:p-10 rounded-3xl border border-white/20 shadow-2xl my-8 transition-all duration-500">
           
           {/* Mobile logo */}
-          <div className="flex lg:hidden items-center gap-3 mb-10">
-            <div className="w-12 h-12 rounded-2xl bg-brand-600 flex items-center justify-center shadow-lg shadow-brand-500/20">
-              <Bell className="h-6 w-6 text-white" />
+          <div className="flex lg:hidden items-center justify-between mb-10">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-2xl bg-brand-600 flex items-center justify-center shadow-lg shadow-brand-500/20">
+                <Bell className="h-6 w-6 text-white" />
+              </div>
+              <div>
+                <p className="font-bold text-white text-lg">Polomolok DACS</p>
+                <p className="text-xs text-brand-200 font-medium opacity-80">Disaster Alert System</p>
+              </div>
             </div>
-            <div>
-              <p className="font-bold text-white text-lg">Polomolok DACS</p>
-              <p className="text-xs text-brand-200 font-medium opacity-80">Disaster Alert System</p>
-            </div>
+            {isRegistering && (
+              <button 
+                onClick={() => { setIsRegistering(false); setErrors({}); }}
+                className="p-2 hover:bg-white/10 rounded-full text-white/40 hover:text-white transition-all focus:outline-none"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            )}
           </div>
 
           {!isRegistering ? (
@@ -205,13 +219,14 @@ const Login = () => {
             </div>
           ) : (
             /* Register Form (Modal-style) */
-            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 flex flex-col -m-6 sm:-m-8 lg:-m-10">
+            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 flex flex-col -m-6 sm:-m-8 lg:-m-10 relative">
               {/* Modal Header */}
-              <div className="flex items-center justify-between px-8 py-4 border-b border-white/10 mb-4">
+              <div className="flex items-center justify-between px-8 py-4 border-b border-white/10 mb-4 lg:mb-6">
                 <h3 className="text-xl font-bold text-white tracking-tight">Create Account</h3>
                 <button 
                   onClick={() => { setIsRegistering(false); setErrors({}); }}
-                  className="p-2 hover:bg-white/10 rounded-full text-white/40 hover:text-white transition-all"
+                  className="hidden lg:block p-2 -mr-2 hover:bg-white/10 rounded-full text-white/40 hover:text-white transition-all focus:outline-none"
+                  aria-label="Close Registration"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
