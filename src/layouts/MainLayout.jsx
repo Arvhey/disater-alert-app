@@ -67,21 +67,21 @@ const MainLayout = () => {
     const silentAudio = new Audio("data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA");
     silentAudio.loop = true;
     silentAudio.volume = 0.01;
-
-    const startWatchdog = () => {
-      silentAudio.play().catch(e => console.log("Watchdog waiting for interaction..."));
-      document.removeEventListener('click', startWatchdog);
-      document.removeEventListener('touchstart', startWatchdog);
+    
+    // This hack keeps the background process alive for Real-time subscriptions
+    const keepAlive = () => {
+      silentAudio.play().catch(() => {
+        // Fallback: Retry on next interaction if blocked
+        document.addEventListener('click', keepAlive, { once: true });
+        document.addEventListener('touchstart', keepAlive, { once: true });
+      });
     };
 
-    document.addEventListener('click', startWatchdog);
-    document.addEventListener('touchstart', startWatchdog);
+    keepAlive();
 
     return () => {
       supabase.removeChannel(channel);
       silentAudio.pause();
-      document.removeEventListener('click', startWatchdog);
-      document.removeEventListener('touchstart', startWatchdog);
     };
   }, [isAdmin]);
 

@@ -23,6 +23,24 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(fetch(event.request).catch(() => new Response('Offline')));
 });
 
+self.addEventListener('push', (event) => {
+  const data = event.data ? event.data.json() : {};
+  const title = data.title || '🚨 EMERGENCY ALERT';
+  const options = {
+    body: data.body || 'New tactical report received. Review immediately.',
+    icon: '/vite.svg',
+    badge: '/vite.svg',
+    vibrate: [500, 110, 500, 110, 450, 110, 200, 110, 170, 40, 450, 110, 200, 110, 170, 40],
+    data: { url: '/' },
+    tag: 'emergency-alert',
+    renotify: true,
+    requireInteraction: true,
+    silent: false // Request the OS to play the default notification sound (Siren if set in Android Settings)
+  };
+
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
   event.waitUntil(
