@@ -1,15 +1,17 @@
 import { useMemo, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { AlertTriangle, FileText, MapPin, ArrowRight, Bell, CloudRain } from 'lucide-react';
+import { AlertTriangle, FileText, MapPin, ArrowRight, Bell, CloudRain, Wind, Droplets } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useAlerts } from '../../hooks/useAlerts';
 import { useReports } from '../../hooks/useReports';
+import { useWeather } from '../../hooks/useWeather';
 import Loader from '../../components/common/Loader';
 
 const Dashboard = () => {
   const { user, isAdmin } = useAuth();
   const { alerts, loading: alertsLoading } = useAlerts();
   const { reports, loading: reportsLoading } = useReports(isAdmin ? null : user?.id);
+  const { weather, loading: weatherLoading, refresh: refreshWeather } = useWeather();
 
   const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }));
 
@@ -67,38 +69,53 @@ const Dashboard = () => {
 
         {/* Live Weather Widget */}
         <div className="lg:col-span-1 group">
-          <Link to="/forecasting" className="block h-full bg-white/5 backdrop-blur-2xl rounded-2xl sm:rounded-[40px] p-4 sm:p-8 border border-white/10 text-white shadow-2xl relative overflow-hidden transition-all duration-500 hover:bg-white/10">
+          <div className="h-full bg-white/5 backdrop-blur-2xl rounded-2xl sm:rounded-[40px] p-4 sm:p-8 border border-white/10 text-white shadow-2xl relative overflow-hidden transition-all duration-500 hover:bg-white/10">
             <div className="absolute top-0 right-0 w-32 h-32 bg-brand-500/10 rounded-full blur-3xl -mr-10 -mt-10"></div>
             
             <div className="relative z-10 flex flex-col h-full justify-between">
               <div className="flex justify-between items-start mb-4 sm:mb-10">
-                <div className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-green-400 shadow-[0_0_8px_rgba(74,222,128,0.5)] animate-pulse"></div>
-                  <span className="text-[8px] font-black tracking-[0.3em] uppercase text-white/30">Env Scan</span>
-                </div>
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-white/5 flex items-center justify-center border border-white/10">
+                <button 
+                  onClick={(e) => { e.preventDefault(); refreshWeather(); }}
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-full hover:bg-white/10 transition-all active:scale-95 group/scan"
+                  title="Force Tactical Scan"
+                >
+                  <div className={`w-1.5 h-1.5 rounded-full ${weatherLoading ? 'bg-amber-400 animate-spin' : 'bg-green-400'} shadow-[0_0_8px_rgba(74,222,128,0.5)]`}></div>
+                  <span className="text-[8px] font-black tracking-[0.3em] uppercase text-white/30 group-hover/scan:text-brand-400 transition-colors">Env Scan</span>
+                </button>
+                <Link to="/forecasting" className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 hover:bg-brand-500/20 hover:border-brand-500/50 transition-all">
                   <CloudRain className="w-5 h-5 sm:w-6 sm:h-6 text-brand-400" />
-                </div>
+                </Link>
               </div>
               
-              <div>
-                <div className="text-4xl sm:text-7xl font-black mb-1 tracking-tighter">29°C</div>
-                <p className="text-[9px] sm:text-sm font-black text-brand-200/40 uppercase tracking-widest mb-6 sm:mb-12">Polomolok SC</p>
-              </div>
+              {weatherLoading ? (
+                <div className="animate-pulse space-y-4">
+                  <div className="h-12 sm:h-16 bg-white/10 rounded-2xl w-3/4"></div>
+                  <div className="h-4 bg-white/5 rounded-lg w-1/2"></div>
+                </div>
+              ) : (
+                <div>
+                  <div className="text-4xl sm:text-7xl font-black mb-1 tracking-tighter">
+                    {Math.round(weather?.temperature_2m || 0)}°C
+                  </div>
+                  <p className="text-[9px] sm:text-sm font-black text-brand-200/40 uppercase tracking-widest mb-6 sm:mb-12">Polomolok SC</p>
+                </div>
+              )}
 
               <div className="flex items-center justify-between mt-auto">
-                <div className="flex gap-1">
-                  <div className="px-2 sm:px-4 py-1.5 rounded-lg sm:rounded-xl bg-white/5 border border-white/5 text-[8px] sm:text-[10px] font-black uppercase tracking-widest">
-                    🍃 12k/h
+                <div className="flex gap-1 sm:gap-2">
+                  <div className="flex items-center gap-1 px-2 sm:px-4 py-1.5 rounded-lg sm:rounded-xl bg-white/5 border border-white/5 text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-white/60">
+                    <Wind className="w-3 h-3 sm:w-4 sm:h-4 text-brand-400" />
+                    <span>{weather?.wind_speed_10m || 0}k/h</span>
                   </div>
-                  <div className="px-2 sm:px-4 py-1.5 rounded-lg sm:rounded-xl bg-white/5 border border-white/5 text-[8px] sm:text-[10px] font-black uppercase tracking-widest">
-                    💧 74%
+                  <div className="flex items-center gap-1 px-2 sm:px-4 py-1.5 rounded-lg sm:rounded-xl bg-white/5 border border-white/5 text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-white/60">
+                    <Droplets className="w-3 h-3 sm:w-4 sm:h-4 text-blue-400" />
+                    <span>{weather?.relative_humidity_2m || 0}%</span>
                   </div>
                 </div>
                 <div className="text-[8px] sm:text-[10px] font-black text-white/10 tracking-widest uppercase">{currentTime}</div>
               </div>
             </div>
-          </Link>
+          </div>
         </div>
       </div>
 

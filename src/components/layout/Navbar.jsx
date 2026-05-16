@@ -113,16 +113,6 @@ const Navbar = () => {
                     <Settings className="h-4 w-4 text-white/20" />
                     Settings
                   </Link>
-                  {isAdmin && (
-                    <Link
-                      to="/admin"
-                      onClick={() => setShowProfile(false)}
-                      className="flex items-center gap-3 px-4 py-3.5 rounded-2xl hover:bg-white/5 text-white/70 text-sm font-bold transition-all mt-1"
-                    >
-                      <Shield className="h-4 w-4 text-white/20" />
-                      Admin Panel
-                    </Link>
-                  )}
                   <button
                     onClick={handleSignOut}
                     className="w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl hover:bg-red-500/10 text-red-400 text-sm font-bold transition-all mt-2 border border-transparent hover:border-red-500/20"
