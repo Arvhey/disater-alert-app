@@ -14,8 +14,18 @@ import { SEVERITY_LEVELS, BARANGAYS } from '../../utils/constants';
 
 const AdminPanel = () => {
   const playAlertSound = () => {
-    const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
-    audio.play().catch(err => console.log('Audio playback failed until user interacts with the page.', err));
+    // High-fidelity Police Siren SFX
+    const sirenUrl = 'https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3';
+    const audio = new Audio(sirenUrl);
+    
+    audio.loop = true;
+    audio.play().catch(err => console.log('Audio playback blocked by browser until interaction', err));
+    
+    // Stop the siren automatically after 10 seconds
+    setTimeout(() => {
+      audio.pause();
+      audio.currentTime = 0;
+    }, 10000);
   };
 
   const { alerts, loading: alertsLoading } = useAlerts();
@@ -81,7 +91,7 @@ const AdminPanel = () => {
       }
 
       leafletMap.current.setView(BARANGAY_COORDS[report.barangay], 15);
-      
+
       if (mapRef.current) {
         const scrollContainer = document.querySelector('main');
         if (scrollContainer) {
@@ -91,7 +101,7 @@ const AdminPanel = () => {
           });
         }
       }
-      
+
       const jitterLat = (Math.random() - 0.5) * 0.005;
       const jitterLng = (Math.random() - 0.5) * 0.005;
       const lat = BARANGAY_COORDS[report.barangay][0] + jitterLat;
@@ -108,7 +118,7 @@ const AdminPanel = () => {
             <div class="text-[10px] text-slate-700 mt-1 italic break-words whitespace-normal overflow-wrap-anywhere">"${report.description}"</div>
           </div>
         `);
-      
+
       activeMarkerRef.current = marker;
 
       setTimeout(() => marker.openPopup(), 400); // Wait for map to pan
@@ -148,7 +158,7 @@ const AdminPanel = () => {
           <div className="space-y-6">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 px-2">
               <h2 className="text-xl font-black text-white uppercase tracking-tight">Active Broadcasts</h2>
-              <Button 
+              <Button
                 onClick={() => handleOpenModal()}
                 variant="primary"
                 size="md"
@@ -170,8 +180,8 @@ const AdminPanel = () => {
                         <span className="text-[10px] font-black text-brand-400 uppercase tracking-widest">{a.severity} Priority Ops</span>
                       </div>
                     </div>
-                    <button 
-                      onClick={() => deleteAlert(a.id)} 
+                    <button
+                      onClick={() => deleteAlert(a.id)}
                       className="w-full sm:w-auto p-4 sm:p-3 text-white/20 hover:text-red-400 hover:bg-red-500/20 rounded-2xl transition-all border border-white/5 hover:border-red-500/50 flex items-center justify-center gap-2"
                     >
                       <Trash2 className="h-5 w-5" />
@@ -187,7 +197,7 @@ const AdminPanel = () => {
         {activeTab === 'reports' && (
           <div className="space-y-6">
             <h2 className="text-xl font-black text-white uppercase tracking-tight px-2">Sector Reports (Tactical Map)</h2>
-            
+
             {/* Tactical Map Container */}
             <div className="bg-white/5 backdrop-blur-xl overflow-hidden h-[250px] sm:h-[400px] relative border border-white/10 shadow-2xl rounded-3xl w-full max-w-full">
               <div ref={mapRef} className="h-full w-full grayscale-[0.2] contrast-[1.1] brightness-[0.9] z-0" />
@@ -197,7 +207,7 @@ const AdminPanel = () => {
               <div className="grid grid-cols-1 gap-4">
                 {reports.map(r => (
                   <div key={r.id} className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 group hover:bg-white/10 transition-all duration-300 shadow-2xl">
-                    
+
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-3 mb-2">
                         <span className="px-2 py-1 rounded-md bg-brand-500/20 text-brand-300 text-[10px] font-black uppercase tracking-widest border border-brand-500/20 shadow-lg">{r.type || 'Incident'}</span>
@@ -207,7 +217,7 @@ const AdminPanel = () => {
                     </div>
 
                     <div className="w-full sm:w-auto sm:self-stretch flex items-center justify-center">
-                      <button 
+                      <button
                         onClick={() => locateReport(r)}
                         className="w-full sm:w-auto h-full p-4 sm:p-6 text-brand-400 hover:text-white bg-brand-500/10 hover:bg-brand-500 border border-brand-500/30 rounded-2xl transition-all flex sm:flex-col items-center justify-center gap-3 shadow-lg active:scale-95 group/btn"
                       >
@@ -226,7 +236,7 @@ const AdminPanel = () => {
           <div className="space-y-6">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 px-2">
               <h2 className="text-xl font-black text-white uppercase tracking-tight">Evacuation Centers</h2>
-              <Button 
+              <Button
                 onClick={() => handleOpenModal()}
                 variant="primary"
                 size="md"
@@ -249,7 +259,7 @@ const AdminPanel = () => {
                       </div>
                     </div>
                     <div className="flex items-center gap-3 w-full sm:w-auto">
-                      <button 
+                      <button
                         onClick={async () => {
                           try {
                             await deleteCenter(c.id);
@@ -258,7 +268,7 @@ const AdminPanel = () => {
                           } catch (err) {
                             toast.error('Failed to delete center');
                           }
-                        }} 
+                        }}
                         className="flex-1 sm:flex-none p-4 sm:p-3 text-white/20 hover:text-red-400 hover:bg-red-500/20 rounded-2xl transition-all border border-white/5 hover:border-red-500/50 flex items-center justify-center gap-2"
                       >
                         <Trash2 className="h-5 w-5" />

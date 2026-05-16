@@ -4,7 +4,6 @@ import { createPortal } from 'react-dom';
 import Navbar from '../components/layout/Navbar';
 import Sidebar from '../components/layout/Sidebar';
 import BottomNav from '../components/layout/BottomNav';
-import PwaInstallBanner from '../components/layout/PwaInstallBanner';
 import { useAuth } from '../hooks/useAuth';
 import { supabase } from '../supabase';
 import { toast } from 'react-toastify';
@@ -143,9 +142,8 @@ const MainLayout = () => {
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0 relative lg:pl-72 min-h-screen lg:h-screen">
 
-        {/* Global Headers (PWA Banner + Navbar) */}
+        {/* Global Headers (Navbar) */}
         <div className="sticky top-0 z-[100] w-full bg-[#0f172a]">
-          <PwaInstallBanner />
           <Navbar />
         </div>
 

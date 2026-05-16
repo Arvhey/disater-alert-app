@@ -9,6 +9,7 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <PwaInstallBanner />
         <AppRoutes />
         <ToastContainer 
           position="top-right"
